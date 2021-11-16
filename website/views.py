@@ -54,6 +54,7 @@ def delete_post(id):
 @views.route("/posts/<username>")
 @login_required
 def posts(username):
+    quote = get_quotes()
     user = User.query.filter_by(username=username).first()
 
     if not user:
@@ -61,7 +62,7 @@ def posts(username):
         return redirect(url_for('views.home'))
 
     posts = user.posts
-    return render_template("posts.html", user=current_user, posts=posts, username=username)
+    return render_template("posts.html", user=current_user, posts=posts, username=username,quote=quote)
 
 
 @views.route("/create-comment/<post_id>", methods=['POST'])
